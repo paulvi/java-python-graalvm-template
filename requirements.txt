@@ -1,0 +1,6 @@
+certifi==2020.11.8
+chardet==3.0.4
+hpy.devel==0.1.dev950+g98f448a
+idna==2.8
+requests==2.22.0
+urllib3==1.25.6
