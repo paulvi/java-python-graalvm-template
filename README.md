@@ -1,6 +1,6 @@
 
-This project is created as Python project (using `graalpython`),
-then converted into Java project by adding maven pom.xml
+Run Python code that is using packages like `requests` from Java,
+using GraalVM with Python module (`graalpython`).
 
 This template is based on https://github.com/hpi-swa-lab/graalpython-java-example
 
@@ -31,6 +31,9 @@ Run:
 
 
 # To recreate
+
+This project is created as Python project (using `graalpython`),
+then converted into Java project by adding maven pom.xml.
 
 Create new graalpython project:
 
