@@ -10,6 +10,17 @@ This template is based on https://github.com/hpi-swa-lab/graalpython-java-exampl
  Python packages can be bundled into .jar, but GraalVM cannot yet execute this way, 
  so they must be external to .jar file.
 
+```
+Hello Java!
+11.0.11
+11.0.11+8-jvmci-21.1-b05
+venv/bin/graalpython
+Hello Python!
+3.8.5 (Fri Jun 25 17:55:09 CST 2021)
+[Graal, GraalVM CE, Java 11.0.11]
+{'data': {'indexingStatusForCurrentVersion': None}}
+```
+
 # To use
 
     git clone https://github.com/paulvi/graalpython-java-template
