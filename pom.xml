@@ -3,12 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!-- following: standard maven pom.xml -->
 
     <groupId>org.example</groupId>
-    <artifactId>graalpythonProject3</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>graalpython-java</artifactId>
+    <version>1.0</version>
 
     <properties>
+        <mainClass>RunGraalPython3</mainClass>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <maven.compiler.source>11</maven.compiler.source>
@@ -40,6 +43,34 @@
         </resources>
 
         <plugins>
+            <!-- require GraalVM, used in profiles executions -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <executions>
+                    <execution>
+                        <id>enforce-graalvm-python</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireFilesExist>
+                                    <message>You must set JAVA_HOME to a GraalVM with Python installed.</message>
+                                    <files>
+                                        <file>${env.JAVA_HOME}/bin/graalpython</file>
+                                    </files>
+                                </requireFilesExist>
+                            </rules>
+                            <fail>true</fail>
+                            <failFast>true</failFast>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -47,7 +78,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>RunGraalPython3</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -145,7 +176,7 @@
                             <arguments>
                                 <argument>-classpath</argument>
                                 <classpath/>
-                                <argument>RunGraalPython3</argument>
+                                <argument>${mainClass}</argument>
                             </arguments>
                         </configuration>
                     </plugin>

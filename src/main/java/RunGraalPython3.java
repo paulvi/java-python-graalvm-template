@@ -1,18 +1,16 @@
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class RunGraalPython3 {
     public static String PYTHON = "python";
-    // venv/**/* must be included into resources in pom.xml
+    // For future when jar can have all Python env, venv/**/* must be included into resources in pom.xml
     //private static String VENV_EXECUTABLE = RunGraalPython3.class.getClassLoader().getResource(Paths.get("venv", "bin", "graalpython").toString()).getPath();
     private static String SOURCE_FILE_NAME = "health.py";
+    private static InputStream SOURCE_FILE_INPUT = RunGraalPython3.class.getClassLoader().getResourceAsStream(SOURCE_FILE_NAME);
 
     public static void log(String s){
         System.out.println(s);
@@ -22,7 +20,7 @@ public class RunGraalPython3 {
         log("Hello Java!");
         log(System.getProperty("java.version"));
         log(System.getProperty("java.runtime.version"));
-        //Java 9
+        //Java 9+
         //log(Runtime.version().toString());
 
         String pyFilename = "./health.py";
@@ -46,7 +44,7 @@ public class RunGraalPython3 {
 
             context.eval(PYTHON, "import sys; print(sys.version)");
 
-//            //4
+//            //4 This approach will not work  for multiline strings, if/else, function definitions, but is good for tiny script debugging.
 //            try(BufferedReader br = new BufferedReader(new FileReader(pyFilename))) {
 //                int i = 0;
 //                for(String line; (line = br.readLine()) != null; ) {
@@ -58,10 +56,10 @@ public class RunGraalPython3 {
 //                log("IOException "+e);
 //            }
 
-            InputStreamReader code = new InputStreamReader(RunPython4.class.getClassLoader().getResourceAsStream(SOURCE_FILE_NAME));
+            InputStreamReader reader = new InputStreamReader(SOURCE_FILE_INPUT);
             Source source;
             try {
-                source = Source.newBuilder(PYTHON, code, SOURCE_FILE_NAME).build();
+                source = Source.newBuilder(PYTHON, reader, SOURCE_FILE_NAME).build();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
