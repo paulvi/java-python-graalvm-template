@@ -4,7 +4,11 @@ using GraalVM with Python module (`graalpython`).
 
 This template is based on https://github.com/hpi-swa-lab/graalpython-java-example
 
-Ready for production!
+- No java dependencies, only Java code example and maven pom.xml example to handle Python setup.
+- Specify Python direct requierements in `req.txt`
+- Ready for production! Python code can be bundled into .jar or be external.
+ Python packages can be bundled into .jar, but GraalVM cannot yet execute this way, 
+ so they must be external to .jar file.
 
 # To use
 
