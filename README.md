@@ -11,15 +11,39 @@ using GraalVM with Python module (`graalpython`).
 
 This template is based on https://github.com/hpi-swa-lab/graalpython-java-example
 
+# Quick start
+
+1. Download [GraalVM](https://www.graalvm.org/downloads/) and set your `JAVA_HOME` to point to it.  
+Make sure you have installed Python support:
+```
+"${JAVA_HOME}"/bin/gu install python
+```
+
+2. Compile the example:
+```
+mvn package
+```
+
+3. Run the example:
+```
+mvn exec:exec
+```
+or
+```
+java -jar target/graalpython-java-1.0.jar
+```
+
+See output like
+
 ```
 Hello Java!
 11.0.11
 11.0.11+8-jvmci-21.1-b05
 venv/bin/graalpython
-Hello Python!
+Hello Python!  <-- from this point it is from python
 3.8.5 (Fri Jun 25 17:55:09 CST 2021)
 [Graal, GraalVM CE, Java 11.0.11]
-{'data': {'indexingStatusForCurrentVersion': None}}
+{'data': {'indexingStatusForCurrentVersion': None}}  <-- json from python requests
 ```
 
 # To use
