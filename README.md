@@ -116,6 +116,10 @@ Converting into Java maven project:
 
     cp pomx.xml, src/
 
+# Notes
+
+Using `src/main/python` instead of `src/main/resources` as of 2021, has no benefits,
+as there is no maven plugins for python sources.
 
 # Docs & links
 
