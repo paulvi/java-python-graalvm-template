@@ -4,12 +4,21 @@ using GraalVM with Python module (`graalpython`).
 
 
 - No java dependencies, only Java code example and maven pom.xml example to handle Python setup.
-- Specify Python direct requierements in `req.txt`
+- Specify Python direct requirements in `req.txt`
 - Ready for production! Python code can be bundled into .jar or be external.
- Python packages can be bundled into .jar, but GraalVM cannot yet execute this way, 
+ Python packages can be bundled into .jar, but GraalVM cannot yet execute this way,
  so they must be external to .jar file.
 
 This template is based on https://github.com/hpi-swa-lab/graalpython-java-example
+
+# Changelog
+
+1.1 (2021-6-23)
+- venv name is configurable in maven pom.xml property
+`<venv.name>`, default `venv`
+- pip requirements filename is configurable in maven pom.xml property
+`<pip.install.requirements.filename>`, default `req.txt`, usual `requirements.txt`
+
 
 # Quick start
 
@@ -24,13 +33,13 @@ Make sure you have installed Python support:
 mvn package
 ```
 
-3. Run the example:
+3. Run the example, using maven:
 ```
 mvn exec:exec
 ```
-or
+or java, like:
 ```
-java -jar target/graalpython-java-1.0.jar
+java -jar target/java-python-graalvm.jar
 ```
 
 See output like
@@ -67,7 +76,7 @@ Run:
 
     cd dist
     mvn generate-resources
-    java -jar graalpython-java.jar
+    java -jar java-python-graalvm.jar
 
 
 # To recreate
@@ -97,8 +106,8 @@ Run (using `graalpython` actually):
 
     python health.py
 
-At this point this is still Python project. 
-You can to open with PyCharn, however PyCharn does not support (yet) running `.py` files, 
+At this point this is still Python project.
+You can to open with PyCharn, however PyCharn does not support (yet) running `.py` files,
 even though `venv\bin\python` is commonly used.
 To have this project as Java add maven pom.xml, `src/main/java` Java sources.
 How you can open in IDEA, Eclipse as maven project.
@@ -107,7 +116,11 @@ Converting into Java maven project:
 
     cp pomx.xml, src/
 
-Docs
+
+# Docs & links
+
 - https://www.graalvm.org/python/
 - https://www.graalvm.org/reference-manual/python/
 - https://www.graalvm.org/reference-manual/python/Packages/
+- `pip` Requirements Files https://pip.pypa.io/en/stable/user_guide/#requirements-files
+- `pipreqs` https://pypi.org/project/pipreqs/ can generate `requirements.txt` based on imports in project

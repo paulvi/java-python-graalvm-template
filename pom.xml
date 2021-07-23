@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- following: standard maven pom.xml -->
 
-    <groupId>org.example</groupId>
-    <artifactId>graalpython-java</artifactId>
-    <version>1.0</version>
+    <groupId>org.example.github.paulvi</groupId>
+    <artifactId>java-python-graalvm</artifactId>
+    <version>1.1</version>
 
     <properties>
         <mainClass>RunGraalPython3</mainClass>
@@ -16,6 +16,9 @@
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
+        <venv.name>venv</venv.name>
+        <pip.install.requirements.filename>req.txt</pip.install.requirements.filename>
     </properties>
 
     <dependencies>
@@ -23,6 +26,8 @@
     </dependencies>
 
     <build>
+        <!-- remove this finalName definition to get default ${project.artifactId}-${project.version} value -->
+        <finalName>${project.artifactId}</finalName>
         <resources>
             <!--
              ! We make sure to include the virtual environment and any additional
@@ -31,7 +36,7 @@
             <resource>
                 <directory>${project.basedir}</directory>
                 <includes>
-                    <include>venv/**/*</include>
+                    <include>${venv.name}/**/*</include>
                 </includes>
             </resource>
             <resource>
@@ -91,7 +96,7 @@
             <id>prepare-venv</id>
             <activation>
                 <file>
-                    <missing>venv/bin/pip</missing>
+                    <missing>${venv.name}/bin/pip</missing>
                 </file>
             </activation>
             <build>
@@ -107,7 +112,7 @@
                                  ! to contain the Python packages that we will be
                                  ! using in the Java program.
                                   -->
-                                <id>Prepare venv</id>
+                                <id>Prepare venv named ${venv.name}</id>
                                 <phase>generate-resources</phase>
                                 <goals>
                                     <goal>exec</goal>
@@ -117,7 +122,7 @@
                                     <arguments>
                                         <argument>-m</argument>
                                         <argument>venv</argument>
-                                        <argument>venv</argument>
+                                        <argument>${venv.name}</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
@@ -134,14 +139,14 @@
                                     <goal>exec</goal>
                                 </goals>
                                 <configuration>
-                                    <executable>venv/bin/pip</executable>
+                                    <executable>${venv.name}/bin/pip</executable>
                                     <arguments>
                                         <argument>install</argument>
                                         <argument>-r</argument>
-                                        <argument>req.txt</argument>
+                                        <argument>${pip.install.requirements.filename}</argument>
                                     </arguments>
                                     <environmentVariables>
-                                        <VIRTUAL_ENV>${project.basedir}/venv</VIRTUAL_ENV>
+                                        <VIRTUAL_ENV>${project.basedir}/${venv.name}</VIRTUAL_ENV>
                                     </environmentVariables>
                                 </configuration>
                             </execution>
@@ -154,7 +159,7 @@
             <id>run</id>
             <activation>
                 <file>
-                    <exists>venv/bin/pip</exists>
+                    <exists>${venv.name}/bin/pip</exists>
                 </file>
             </activation>
             <build>
