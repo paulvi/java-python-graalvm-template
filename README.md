@@ -107,7 +107,7 @@ Run (using `graalpython` actually):
     python health.py
 
 At this point this is still Python project.
-You can to open with PyCharn, however PyCharn does not support (yet) running `.py` files,
+You can open with PyCharn, however PyCharn does not support (yet) running `.py` files,
 even though `venv\bin\python` is commonly used.
 To have this project as Java add maven pom.xml, `src/main/java` Java sources.
 How you can open in IDEA, Eclipse as maven project.
